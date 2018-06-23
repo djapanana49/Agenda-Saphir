@@ -1,0 +1,24 @@
+ville:
+
+options
+
+<option value="-6" style="color: gray;" disabled="">--------------------</option>
+<option value="Ajouter une nouvelle entrée...">Ajouter une nouvelle entrée...</option>
+
+Responsables
+
+<option value="-7" style="color: gray;" disabled="">--------------------</option>
+<option value="Ajouter une nouvelle entrée...">Ajouter une nouvelle entrée...</option>
+
+Lieu/Salles
+
+<option value="-3" style="color: gray;" disabled="">--------------------</option>
+	<option value=""></option>
+	<option value="A DEFINIR">A DEFINIR</option>
+	<option value="Bateau Costa - départ Marseille">Bateau Costa - départ Marseille</option>
+	<option value="HORMUZ GRAND HOTEL - MASCATE">HORMUZ GRAND HOTEL - MASCATE</option>
+	<option value="Hôtel INTERCONTINENTAL Paris 9e">Hôtel INTERCONTINENTAL Paris 9e</option>
+	<option value="HOTEL MARRIOTT Paris Champs Elysees 75008 Paris">HOTEL MARRIOTT Paris Champs Elysees 75008 Paris</option>
+	<option value="Novotel Les Halles">Novotel Les Halles</option>
+	<option value="-4" style="color: gray;" disabled="">--------------------</option>
+	<option value="Ajouter une nouvelle entrée...">Ajouter une nouvelle entrée...</option>
