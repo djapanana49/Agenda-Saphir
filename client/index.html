@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<title>Test JSON</title>
+</head>
+<body  onload="charger()">
+ <h1>Test JSONxxx</h1>
+		
+     <button id="btn" type="submit">R&eacute;cup&eacute;rer les villes</button><p><p>
+	 <button id="btn2" type="submit">Cr&eacute;er une ville</button><input type="text" placeholder="cr&eacute;ation de nouvelles villes" id="nouveau"><p><p>
+	 <button id="btn3" type="submit">Modifier une salle</button><input type="text" placeholder="modification d'une salle" id="maj"><input type="text" placeholder="ancienne salle" id="old"><p><p>
+	 <button id="btn4" type="submit">Cr&eacute;er un événement</button><input type="text" placeholder="cr&eacute;ation de nouvelles salles" id="nouveau2"><p><p>
+	 <div id="ville-info"></div>
+	 <input type="search" placeholder="recherche par mots cl&eacute;s" id="recherche">
+    
+	 <table>
+	 
+        <tbody><tr valign="top">
+            <td colspan="2" align="center">
+                <b>Événement</b>
+                <br>
+                <br>
+            </td>
+            <td class="AgendaFiltre" rowspan="50">
+                <div class="AgendaFiltreHeader">
+                    Publication
+                </div>
+                <div class="AgendaFiltreBody" style="text-align: center;">
+                    <br>
+                    <div style="text-align: left; margin-left: 15px;">
+                        <input id="CheckBoxPublier" name="CheckBoxPublier" onclick="javascript:setTimeout('__doPostBack(\'CheckBoxPublier\',\'\')', 0)" type="checkbox"><label for="CheckBoxPublier">Publier</label><br>
+                        <input id="CheckBoxInterne" name="CheckBoxInterne" type="checkbox"><label for="CheckBoxInterne">Evènement interne</label><br>
+                    </div>
+                    <br>
+                    <input name="ButtonEnregistrer" value="Enregistrer" id="ButtonEnregistrer" type="submit">
+                    <input name="ButtonEnregistrerEtPublier" value="Enregistrer et publier" id="ButtonEnregistrerEtPublier" type="submit"><br>
+                    <br>
+                    <span id="LabelEnregistrerInfo" style="color:#006600;"></span><br>
+                    <input name="ButtonRetour" value="Retour" id="ButtonRetour" type="submit"><br>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td width="170px">
+                Intitulé :
+            </td>
+            <td>
+                <input name="TextBoxIntitulé" size="70" id="TextBoxIntitulé" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td><label for="appt-time">Date de début : </label>
+                
+            </td>
+            <td>
+                <input name="TextBoxDateDebut" size="10" id="TextBoxDateDebut" onchange="UpdateLieuSalleDisponible();" type="date">
+                <label for="TextBoxHeureDebut"> - Horaire : </label>
+                <input type="time" id="TextBoxHeureDebut" name="appt-time" min="08:00" max="21:00" required pattern="[0-9]{2}:[0-9]{2}">
+                <span class="validity"></span>
+                
+                <div id="PanelHoraireDebutCustom" style="display: none;">
+	                    
+                <input name="TextBoxHoraireDebut_part1" maxlength="2" size="2" id="TextBoxHoraireDebut_part1" onblur="UpdateLieuSalleDisponible(); return (false);" type="text">h
+                    <input name="TextBoxHoraireDebut_part2" maxlength="2" size="2" id="TextBoxHoraireDebut_part2" onblur="UpdateLieuSalleDisponible(); return (false);" type="text">
+                
+</div>                
+                &nbsp;<a onclick="javascript: DropDownListSelectSecond('DropDownListDateDebut'); DropDownListSelectIndex('DropDownListDateFin', 25); TestHoraireAutre(); UpdateLieuSalleDisponible(); return (false);" id="LinkButton1" href="javascript:__doPostBack('LinkButton1','')">Selectionner toute la journée</a>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <label for="appt-time">Date de fin : </label>
+            </td>
+            <td>
+                <input name="TextBoxDateFin" size="10" id="TextBoxDateFin" onchange="UpdateLieuSalleDisponible();" type="date">
+                <label for="appt-time"> - Horaire : </label>
+                <input type="time" id="TextBoxHeureFin"name="TextBoxHeureFin">
+                <div id="PanelHoraireFinCustom" style="display: none;">
+	                    
+                <input name="TextBoxHoraireFin_part1" maxlength="2" size="2" id="TextBoxHoraireFin_part1" onblur="UpdateLieuSalleDisponible(); return (false);" type="text">h
+                    <input name="TextBoxHoraireFin_part2" maxlength="2" size="2" id="TextBoxHoraireFin_part2" onblur="UpdateLieuSalleDisponible(); return (false);" type="text">
+                
+</div>                
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Type d'événement :
+            </td>
+            <td><select id="sel4" name="event"></select>
+                <div id="ModalPopupExtenderTypeEvenement_foregroundElement" style="display: none; position: fixed;"><div id="PanelTypeEvenement" class="AgendaModalPopup" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ButtonTypeEvenement_Valider')" align="center">
+	
+                    Saisissez une nouvelle valeur pour le type d'évènement<br>
+                    <br>
+                    <input name="TextBoxTypeEvenement" size="50" id="TextBoxTypeEvenement" onkeypress="return clickButton(event,'ButtonTypeEvenement_Valider')" type="text"><br>
+                    <br>
+                    <input name="ButtonTypeEvenement_Valider" value="Valider" id="ButtonTypeEvenement_Valider" type="submit">
+                    &nbsp;<input name="ButtonTypeEvenement_Annuler" value="Annuler" id="ButtonTypeEvenement_Annuler" type="submit">
+                
+</div></div>
+                <input name="ButtonTypeEvenementHidden" value="" id="ButtonTypeEvenementHidden" style="display: none; visibility: hidden" type="submit">
+                
+            <div id="ModalPopupExtenderTypeEvenement_backgroundElement" style="display: none; position: fixed; left: 0px; top: 0px;" class="AgendaModalPopupBackground"></div></td>
+        </tr>
+        <tr>
+            <td>
+                Lieu / Salle :
+            </td>
+            <td>
+               <select id="sel3" name="salle"></select>
+	     
+		 <div id="ModalPopupExtenderLieuSalle_foregroundElement" style="display: none; position: fixed;"><div id="PanelLieuSalle" class="AgendaModalPopup" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ButtonLieuSalle')" align="center">
+	
+                    Saisissez une nouvelle valeur pour le lieu / la salle<br>
+                    <br>
+                    <input name="TextBoxLieuSalle" size="50" id="TextBoxLieuSalle" type="text"><br>
+                    <br>
+                    <input name="ButtonLieuSalle" value="Valider" id="ButtonLieuSalle" type="submit">
+                    &nbsp;<input name="Button2" value="Annuler" id="Button2" type="submit">
+                
+</div></div>
+                <input name="ButtonLieuSalleHidden" value="" id="ButtonLieuSalleHidden" style="display: none; visibility: hidden" type="submit">
+                
+            <div id="ModalPopupExtenderLieuSalle_backgroundElement" style="display: none; position: fixed; left: 0px; top: 0px;" class="AgendaModalPopupBackground"></div></td>
+        </tr>
+        <tr>
+            <td>
+                Ville :
+            </td>
+            <td>
+			<select id="sel1" name="ville" style="width:300px;">
+			<option value="" placeholder="choississez une ville"></option>
+			</select>
+                <div id="ModalPopupExtenderVille_foregroundElement" style="display: none; position: fixed;"><div id="PanelVille" class="AgendaModalPopup" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ButtonVille')" align="center">
+	
+                    Saisissez une nouvelle valeur pour la ville<br>
+                    <br>
+                    <input name="TextBoxVille" size="50" id="TextBoxVille" type="text"><br>
+                    <br>
+                    <input name="ButtonVille" value="Valider" id="ButtonVille" type="submit">
+                    &nbsp;<input name="Button3" value="Annuler" id="Button3" type="submit">
+                
+</div></div>
+                <input name="ButtonVilleHidden" value="" id="ButtonVilleHidden" style="display: none; visibility: hidden" type="submit">
+                
+            <div id="ModalPopupExtenderVille_backgroundElement" style="display: none; position: fixed; left: 0px; top: 0px;" class="AgendaModalPopupBackground"></div></td>
+        </tr>
+        <tr>
+            <td>
+                Responsable :
+            </td>
+            <td>
+                <select id="sel2" name="responsable"></select>
+
+                <div id="ModalPopupExtenderResponsable_foregroundElement" style="display: none; position: fixed;"><div id="PanelResponsable" class="AgendaModalPopup" onkeypress="javascript:return WebForm_FireDefaultButton(event, 'ButtonResponsable')" align="center">
+	
+                    Saisissez un nouveau responsable<br>
+                    <br>
+                    <input name="TextBoxResponsable" size="50" id="TextBoxResponsable" type="text"><br>
+                    <br>
+                    <input name="ButtonResponsable" value="Valider" id="ButtonResponsable" type="submit">
+                    &nbsp;<input name="Button4" value="Annuler" id="Button4" type="submit">
+                
+</div></div>
+                <input name="ButtonResponsableHidden" value="" id="ButtonResponsableHidden" style="display: none; visibility: hidden" type="submit">
+                
+            <div id="ModalPopupExtenderResponsable_backgroundElement" style="display: none; position: fixed; left: 0px; top: 0px;" class="AgendaModalPopupBackground"></div></td>
+        </tr>
+        <tr>
+            <td>
+                Nombre de personnes :
+            </td>
+            <td>
+                <input name="TextBoxNbPersonne" size="6" id="TextBoxNbPersonne" type="text">
+                
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br>
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <b>Détails de l'événement</b>
+                <br>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+                <input id="CheckBoxApercu_Afficher" name="CheckBoxApercu_Afficher" type="checkbox"><label for="CheckBoxApercu_Afficher">Activer l'affichage de l'aperçu</label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Intitulé de l'entête :
+            </td>
+            <td>
+                <input name="TextBoxApercu_Entete" value="Programme..." size="70" id="TextBoxApercu_Entete" type="text">
+            </td>
+        </tr>
+        <tr valign="top">
+            <td>
+                Contenu :
+            </td>
+            <td>
+                <input name="ButtonEditorApercu_Contenu_AfficherMasquer" value="Afficher / Masquer" id="ButtonEditorApercu_Contenu_AfficherMasquer" type="submit"><br>
+                <span id="LabelEditorApercu_Contenu">Contenu masqué</span>
+                
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <br>
+                <hr>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <b>Ajouter un lien</b>
+                <br>
+                <br>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Intitulé du lien :
+            </td>
+            <td>
+                <input name="TextBoxLienIntitulé" value="Détails" size="70" id="TextBoxLienIntitulé" type="text">
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Type du lien :
+            </td>
+            <td>
+                <select name="DropDownListTypeDeLien" onchange="javascript:setTimeout('__doPostBack(\'DropDownListTypeDeLien\',\'\')', 0)" id="DropDownListTypeDeLien" style="width:320px;">
+	<option selected="selected" value="Pas de lien">Pas de lien</option>
+	<option value="Url">Url</option>
+
+</select>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Option d'ouverture :
+            </td>
+            <td>
+                <select name="DropDownListLienOuverture" id="DropDownListLienOuverture" style="width:320px;">
+					<option selected="selected" value="Dans une nouvelle page">Dans une nouvelle page</option>
+					<option value="Dans la même page">Dans la même page</option>
+
+				</select>
+            </td>
+        </tr>
+    </tbody>
+	</table>
+	<br><br><p>
+	 <script type="text/javascript" language="javascript" src="utility.http.js"></script>
+	 <script type="text/javascript" language="javascript" src="db.query.js"></script>
+	 <script type="text/javascript" language="javascript">
+var apiUrl="https://api2.selectour.com/sa/db/Db43.Agenda.Ville";
+var apiUrl2="https://api2.selectour.com/sa/db/Db43.Agenda.Responsable";
+var apiUrl3="https://api2.selectour.com/sa/db/Db43.Agenda.LieuSalle";
+var apiUrl4="https://api2.selectour.com/sa/db/Db43.Agenda.Evenement";
+var apiUrl5="https://api2.selectour.com/sa/db/Db43.Agenda.EvtType";
+var apiUrl6="https://api2.selectour.com/sa/db/Db43.Agenda.Horaire";
+
+//pour afficher les noms des colonnes lien ?ame=get-schema
+	 
+var villeinfo = document.getElementById("ville-info");
+var bouton = document.getElementById("btn");
+var search = document.getElementById("recherche");
+
+//document.getElementById("orange").selected = true; 
+/*
+var e = document.getElementById("elementId");
+var value = e.options[e.selectedIndex].value;
+var text = e.options[e.selectedIndex].text;
+*/
+/*bouton.addEventListener("click", function(){
+	db.query().from(apiUrl).select().where("nom", db.ops.contains,search.value).withIds("alpha").getRows(function(resp){
+	
+
+			renderHTML(resp.result.rows);
+			
+
+	});
+});*/
+var enregistrement = document.getElementById("ButtonEnregistrer");
+var titre = document.getElementById("TextBoxIntitulé").value;
+var jdebut = document.getElementById("TextBoxDateDebut").value;
+var hdebut = document.getElementById("TextBoxHeureDebut").value;
+var jfin = document.getElementById("TextBoxDateFin").value;
+var hfin = document.getElementById("TextBoxHeureFin").value;
+var jourH1 = jdebut+" "+hdebut;
+var jourH2 = jfin+" "+hfin;
+var d = new Date(jourH1);
+var f = new Date(jourH2);
+var datedeb = new Date(d.getFullYear(),d.getMonth(), d.getDate(),d.getHours(),d.getMinutes(),0,0);
+var datefin = new Date(f.getFullYear(),f.getMonth(), f.getDate(),f.getHours(),f.getMinutes(),0,0);
+//var d = new Date(year, month, day, hours, minutes, seconds, milliseconds);
+var debInt = datedeb.getTime();
+var finInt = datefin.getTime();
+console.log(d);
+console.log(debInt);
+console.log(finInt);
+/*console.log("réponse:" + parseInt(datedeb.getTime()));
+var moonLanding = new Date('April 20, 2018 12:30:00 GMT+01:00');
+
+// milliseconds since Jan 1, 1970, 00:00:00.000 GMT
+console.log(moonLanding.getTime());*/
+//expected output: -14254782000
+
+var fin = document.getElementById("TextBoxDateFin").value;
+//var finInt = fin.getTime();
+var salle = document.getElementById("sel3");
+var ville = document.getElementById("sel1");
+var responsable = document.getElementById("sel2");
+var evt = document.getElementById("sel4");
+
+/*var salleId = document.getElementsByTagName("option")[x].value;
+salle.addEventListener("change", function(){
+var index = salle.selectedIndex;
+var index2 = ville.selectedIndex;
+var index3 = responsable.selectedIndex;
+var index4 = evt.selectedIndex;
+var salleId = salle.options[index].value;
+var villeId = ville.options[index2].value;
+var responsableId = responsable.options[index3].value;
+var evtTypeId = evt.options[index4].value;
+console.log("la valeur de la salle est :" + salleId);
+console.log("la valeur de la ville est :" + villeId);
+console.log("la valeur du responsable est :" + responsableId);
+console.log("la valeur de l\'événement est :" + evtTypeId);
+});*/
+enregistrement.addEventListener("click", function(){
+var index = salle.selectedIndex;
+var index2 = ville.selectedIndex;
+var index3 = responsable.selectedIndex;
+var index4 = evt.selectedIndex;
+var salleId = salle.options[index].value;
+var villeId = ville.options[index2].value;
+var responsableId = responsable.options[index3].value;
+var evtTypeId = evt.options[index4].value;
+	db.query().from(apiUrl4).insert().values("dateDeb",debInt).values("dateFin",finInt).values("intitule",titre).values("lieuSalleId",salleId).values("villeId",villeId).values("responsableId",responsableId).values("nbPers", 6).values("estPublie", 0).values("evtTypeId",evtTypeId).values("estInterne", 0).withIds("alpha").insertRow(function(resp4){
+	
+
+			//renderHTML(resp4.result.rows);
+			
+
+	});
+});
+/*var aujourdhui = new Date(datedeb);
+var demain=new Date(moonLanding);
+demain.setTime(demain.getTime() + 24 * 3600 * 1000);
+console.log("Demain nous serons le ") ;
+console.log(demain.getDate()+"/"+(demain.getMonth()+1)+"/"+demain.getFullYear() +" à " +aujourdhui.getHours() +":"+aujourdhui.getMinutes());
+aujourdhui.setTime(aujourdhui.getTime() + 24 * 3600);
+console.log("Aujourd\'hui nous sommes le ")
+console.log(aujourdhui.getDate()+"/"+(aujourdhui.getMonth()+1)+"/"+aujourdhui.getFullYear() +" à " +aujourdhui.getHours() +":"+aujourdhui.getMinutes());*/
+
+//chargement des données des dropdown listes
+function charger(){
+	db.query().from(apiUrl).select("nom","id").withIds("alpha").getRows(function(resp){
+	//chargement des villes
+			selectHTML(resp.result.rows,"sel1");
+			//console.log(resp.result.rows[0].id);
+});
+	db.query().from(apiUrl2).select("nom","id").withIds("alpha").getRows(function(resp2){
+	//chargement des responsables
+			selectHTML(resp2.result.rows,"sel2");
+});
+
+	db.query().from(apiUrl3).select("*").withIds("alpha").getRows(function(resp3){
+  //chargement des salles
+			selectHTML(resp3.result.rows,"sel3");
+});
+	
+	db.query().from(apiUrl5).select("nom","id").withIds("alpha").getRows(function(resp4){
+  //chargement des événements
+			selectHTML(resp4.result.rows,"sel4");
+			//console.log(resp4.result.rows[0].id);
+});
+
+	db.query().from(apiUrl4).select("*").withIds("alpha").getRows(function(resp5){
+	
+		AgendaHTML(resp5.result.rows);
+});
+}
+function insertion(){
+alert("insertion faite");
+
+}
+//code pour insertion dans la table ville
+var bouton2 = document.getElementById("btn2");
+var nouveau= document.getElementById("nouveau");
+bouton2.addEventListener("click", function(){
+	
+	db.query().from(apiUrl).insert().values("nom", nouveau.value.toUpperCase()).values("estParDefaut", 0).withIds("alpha").insertRow(function(resp){
+	
+		
+	//.where("nom", "VICHY")
+
+	});
+});
+
+//code pour insertion dans la table evtType
+var bouton4 = document.getElementById("btn4");
+var nouveau2 = document.getElementById("nouveau2");
+bouton4.addEventListener("click", function(){
+	
+	db.query().from(apiUrl5).insert().values("nom", nouveau2.value.toUpperCase()).values("estParDefaut", 0).withIds("alpha").insertRow(function(resp){
+	
+	});
+});
+
+var bouton3 = document.getElementById("btn3");
+var MiseAJour= document.getElementById("maj");
+var old= document.getElementById("old");
+bouton3.addEventListener("click", function(){
+db.query().from(apiUrl).update().values("nom", MiseAJour.value).values("id", old.value).withIds("alpha").updateRow(function(resp){
+	console.log(MiseAJour.value.toUpperCase());
+	console.log(old.value.toUpperCase());
+	});
+});
+	
+function renderHTML(data){
+
+	var body = document.getElementsByTagName("body")[0];
+	var tbl = document.createElement("table");
+	var tblBody = document.createElement("tbody");
+	
+	for(var i=0; i< data.length;i++){
+		var row = document.createElement("tr");
+		var cell = document.createElement("td");
+		var cellText = document.createTextNode(data[i].nom);
+		var cell2 = document.createElement("td");
+		var cellText2 = document.createTextNode(data[i].id);
+		cell.appendChild(cellText);
+		cell2.appendChild(cellText2);
+		row.appendChild(cell);
+		row.appendChild(cell2);
+		tblBody.appendChild(row);
+		console.log(data[i].nom);
+	}
+	tbl.appendChild(tblBody);
+	// mets table dans le body
+	body.appendChild(tbl);
+	// bordure 2;
+	tbl.setAttribute("border", "2");
+	
+}
+function selectHTML(data,selX){
+
+	var selection = document.getElementById(selX);
+	
+	for(var i=0; i< data.length;i++){
+		var option = document.createElement("option");
+		var optionText = document.createTextNode(data[i].nom);
+		option.appendChild(optionText);
+        option.setAttribute("value",data[i].id);
+		//selection.appendChild(option);
+        selection.insertBefore(option,selection.lastChild); //si une option par défaut dans le code HTML
+	}
+	
+}
+
+function AgendaHTML(data){
+
+	var body = document.getElementsByTagName("body")[0];
+	var tbl = document.createElement("table");
+	var tblHead = document.createElement("thead");
+	var row_head = document.createElement("tr");
+	var titre1 = document.createElement("th");
+	var titreText1 = document.createTextNode("Date début");
+	var titre2 = document.createElement("th");
+	var titreText2 = document.createTextNode("Date fin");
+	var titre3 = document.createElement("th");
+	var titreText3 = document.createTextNode("Heure début");
+	var titre4 = document.createElement("th");
+	var titreText4 = document.createTextNode("Heure fin");
+	var titre5 = document.createElement("th");
+	var titreText5 = document.createTextNode("Intitulé");
+	var tblBody = document.createElement("tbody");
+	titre1.appendChild(titreText1);
+	titre2.appendChild(titreText2);
+	titre3.appendChild(titreText3);
+	titre4.appendChild(titreText4);
+	titre5.appendChild(titreText5);
+	row_head.appendChild(titre1);
+	row_head.appendChild(titre2);
+	row_head.appendChild(titre3);
+	row_head.appendChild(titre4);
+	row_head.appendChild(titre5);
+	tblHead.appendChild(row_head);
+	
+	for(var i=0; i< data.length;i++){
+	var d = new Date(data[i].dateDeb);
+	var f = new Date(data[i].dateFin);
+	d.setTime(d.getTime()) ;
+	f.setTime(f.getTime());
+	var dbd = d.getDate()+"/"+(d.getMonth()+1)+"/"+d.getFullYear();
+	var fid = f.getDate()+"/"+(f.getMonth()+1)+"/"+f.getFullYear();
+	var hdb = d.getHours()+"h"+d.getMinutes();
+	var hfn = f.getHours()+"h"+f.getMinutes();
+		var row = document.createElement("tr");
+		var cell = document.createElement("td");
+		var cellText = document.createTextNode(dbd);
+		var cell2 = document.createElement("td");
+		var cellText2 = document.createTextNode(fid);
+		var cell3 = document.createElement("td");
+		var cellText3 = document.createTextNode(hdb);
+		var cell4 = document.createElement("td");
+		var cellText4 = document.createTextNode(hfn);
+		var cell5 = document.createElement("td");
+		var cellText5 = document.createTextNode(data[i].intitule);
+		cell.appendChild(cellText);
+		cell2.appendChild(cellText2);
+		cell3.appendChild(cellText3);
+		cell4.appendChild(cellText4);
+		cell5.appendChild(cellText5);
+		row.appendChild(cell);
+		row.appendChild(cell2);
+		row.appendChild(cell3);
+		row.appendChild(cell4);
+		row.appendChild(cell5);
+		tblBody.appendChild(row);
+		
+	}
+	tbl.appendChild(tblHead);
+	tbl.appendChild(tblBody);
+	
+	// mets table dans le body
+	body.appendChild(tbl);
+	// bordure 2;
+	tbl.setAttribute("border", "1");
+	
+}
+
+
+
+</script>
+</body>
+</html>
